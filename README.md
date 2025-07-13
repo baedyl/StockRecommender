@@ -95,3 +95,37 @@ To learn more about React Native, take a look at the following resources:
 - [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+
+## Environment Variables
+
+To use the Alpha Vantage API, create a `.env` file in the root of your project with the following content:
+
+```
+ALPHA_VANTAGE_API_KEY=YOUR_ALPHA_VANTAGE_API_KEY
+```
+
+Replace `YOUR_ALPHA_VANTAGE_API_KEY` with your actual API key.
+
+If you change the .env file, restart your development server to apply changes.
+
+## Stock Data API Key Setup
+
+This app uses [Alpha Vantage](https://www.alphavantage.co/) for real stock price data. To use it, you need to obtain a free API key:
+
+1. Go to https://www.alphavantage.co/support/#api-key and sign up for a free API key.
+2. After receiving your key, create a `.env` file in the root of your project (same directory as `package.json`).
+3. Add the following line to your `.env` file:
+
+```
+ALPHA_VANTAGE_API_KEY=YOUR_ALPHA_VANTAGE_API_KEY
+```
+
+Replace `YOUR_ALPHA_VANTAGE_API_KEY` with the key you received from Alpha Vantage.
+
+4. Restart your development server after making changes to the `.env` file.
+
+If the API key is not set, the app will fall back to using mock data for stock prices.
+
+## Social Media Counts
+
+This app uses the public [StockTwits API](https://api.stocktwits.com/developers/docs/api) to fetch recent message counts for a given stock symbol. No API key is required for StockTwits.

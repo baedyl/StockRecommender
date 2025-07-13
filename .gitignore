@@ -36,6 +36,7 @@ local.properties
 .kotlin/
 
 # node.js
+.env
 #
 node_modules/
 npm-debug.log

@@ -4,9 +4,10 @@ import { StockData } from '../../types';
 
 interface DataDisplayProps {
   data: StockData[];
+  recentSocialCount?: number;
 }
 
-const DataDisplay: React.FC<DataDisplayProps> = ({ data }) => {
+const DataDisplay: React.FC<DataDisplayProps> = ({ data, recentSocialCount }) => {
   if (!data.length) return null;
 
   const latestData = data[data.length - 1];
@@ -40,6 +41,16 @@ const DataDisplay: React.FC<DataDisplayProps> = ({ data }) => {
           </Text>
         </View>
       </View>
+      {recentSocialCount !== undefined && (
+        <View style={styles.row}>
+          <View style={styles.stat}>
+            <Text style={styles.label}>Recent Social Media Count</Text>
+            <Text style={styles.value} accessibilityLabel={`Recent social media count: ${recentSocialCount}`}>
+              {recentSocialCount.toLocaleString()}
+            </Text>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
@@ -64,7 +75,8 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginBottom: 10
   },
   stat: {
     alignItems: 'center',
