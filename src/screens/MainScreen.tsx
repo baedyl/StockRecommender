@@ -5,9 +5,10 @@ import StockInput from '../components/StockInput';
 import DataDisplay from '../components/DataDisplay';
 import { RealDataService } from '../api/realDataService';
 import { MockDataService } from '../api/mockDataService';
-import { RecommendationAlgorithm } from '../algorithms/recommendationAlgorithm';
-import { StockData, RecommendationData } from '../types';
+import { recommendationAlgorithms } from '../algorithms';
+import { StockData, RecommendationData, RecommendationType } from '../types';
 import { getStockTwitsMessageCount } from '../api/stocktwitsService';
+import { Picker } from '@react-native-picker/picker';
 
 const MainScreen: React.FC = () => {
   const [stockSymbol, setStockSymbol] = useState<string>('');
@@ -16,6 +17,7 @@ const MainScreen: React.FC = () => {
   const [recommendations, setRecommendations] = useState<RecommendationData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [recentSocialCount, setRecentSocialCount] = useState<number>(0);
+  const [selectedAlgorithmId, setSelectedAlgorithmId] = useState<string>(recommendationAlgorithms[0].id);
 
   // Determine which data service to use based on API key
   const dataService = React.useMemo(() => {
@@ -30,7 +32,7 @@ const MainScreen: React.FC = () => {
     return new MockDataService();
   }, []);
 
-  const algorithm = React.useMemo(() => new RecommendationAlgorithm(), []);
+  const selectedAlgorithm = recommendationAlgorithms.find(a => a.id === selectedAlgorithmId) || recommendationAlgorithms[0];
 
   const fetchData = useCallback(async () => {
     if (!stockSymbol.trim()) {
@@ -43,7 +45,7 @@ const MainScreen: React.FC = () => {
       setStockData(data);
       const recs: RecommendationData[] = data.map((dayData, index) => {
         const historical = data.slice(0, index + 1);
-        const recommendation = algorithm.calculateRecommendation(dayData, historical);
+        const recommendation = selectedAlgorithm.calculateRecommendation(dayData, historical) as RecommendationType;
         return {
           ...dayData,
           recommendation
@@ -58,7 +60,7 @@ const MainScreen: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [stockSymbol, timeWindow, algorithm, dataService]);
+  }, [stockSymbol, timeWindow, selectedAlgorithm, dataService]);
 
   // Render recommendation row
   const getRecommendationStyle = (recommendation: string) => {
@@ -110,6 +112,18 @@ const MainScreen: React.FC = () => {
         onSubmit={fetchData}
         isLoading={isLoading}
       />
+      <View style={{ marginHorizontal: 10, marginBottom: 10 }}>
+        <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>Recommendation Algorithm:</Text>
+        <Picker
+          selectedValue={selectedAlgorithmId}
+          onValueChange={setSelectedAlgorithmId}
+          style={{ backgroundColor: 'white' }}
+        >
+          {recommendationAlgorithms.map(alg => (
+            <Picker.Item key={alg.id} label={alg.name} value={alg.id} />
+          ))}
+        </Picker>
+      </View>
       {stockData.length > 0 && <DataDisplay data={stockData} recentSocialCount={recentSocialCount} />}
       {stockData.length > 0 && (
         <>
