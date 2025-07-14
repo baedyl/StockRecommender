@@ -1,131 +1,135 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# StockRecommender
 
-# Getting Started
+A cross-platform React Native app for stock recommendations, using real or mock data, with a maintainable and testable architecture.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## 🚀 Getting Started
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v16+ recommended)
+- [Yarn](https://yarnpkg.com/) or npm
+- [Watchman](https://facebook.github.io/watchman/) (macOS)
+- [Xcode](https://developer.apple.com/xcode/) (for iOS)
+- [Android Studio](https://developer.android.com/studio) (for Android)
+- [CocoaPods](https://cocoapods.org/) (for iOS)
+- Ruby (for CocoaPods)
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+> **Tip:** Complete the [React Native Environment Setup](https://reactnative.dev/docs/environment-setup) before proceeding.
+
+---
+
+### 1. Install Dependencies
 
 ```sh
-# Using npm
-npm start
+# Install JS dependencies
+npm install
+# or
+yarn install
 
-# OR using Yarn
+# (iOS only) Install native dependencies
+bundle install
+bundle exec pod install --project-directory=ios
+```
+
+---
+
+### 2. Configure Environment Variables
+
+To use real stock data, create a `.env` file in the project root:
+
+```
+ALPHA_VANTAGE_API_KEY=YOUR_ALPHA_VANTAGE_API_KEY
+```
+
+- Get a free API key from [Alpha Vantage](https://www.alphavantage.co/support/#api-key)
+- If no key is set, the app will use mock data for development
+
+---
+
+### 3. Start the Metro Bundler
+
+```sh
+npm start
+# or
 yarn start
 ```
 
-## Step 2: Build and run your app
+---
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### 4. Run the App
 
-### Android
-
+#### Android
 ```sh
-# Using npm
 npm run android
-
-# OR using Yarn
+# or
 yarn android
 ```
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
+#### iOS
 ```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
 npm run ios
-
-# OR using Yarn
+# or
 yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+> **Note:** For iOS, ensure you have run CocoaPods as shown above.
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+---
 
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
-
-## Environment Variables
-
-To use the Alpha Vantage API, create a `.env` file in the root of your project with the following content:
+## 🏗️ Project Structure
 
 ```
-ALPHA_VANTAGE_API_KEY=YOUR_ALPHA_VANTAGE_API_KEY
+src/
+├── algorithms/         # Recommendation algorithms
+├── api/                # Data fetching and mock services
+├── components/         # Reusable UI components
+├── constants/          # App-wide config and labels
+├── hooks/              # Custom React hooks
+├── screens/            # App screens
+├── services/           # Service factories and utilities
+├── types/              # TypeScript types
 ```
 
-Replace `YOUR_ALPHA_VANTAGE_API_KEY` with your actual API key.
+- **Mock vs Real Data:**
+  - If `ALPHA_VANTAGE_API_KEY` is set, real stock data is fetched
+  - If not, the app uses mock data for all stocks (great for development/testing)
 
-If you change the .env file, restart your development server to apply changes.
+---
 
-## Stock Data API Key Setup
+## 🧪 Running Tests
 
-This app uses [Alpha Vantage](https://www.alphavantage.co/) for real stock price data. To use it, you need to obtain a free API key:
-
-1. Go to https://www.alphavantage.co/support/#api-key and sign up for a free API key.
-2. After receiving your key, create a `.env` file in the root of your project (same directory as `package.json`).
-3. Add the following line to your `.env` file:
-
-```
-ALPHA_VANTAGE_API_KEY=YOUR_ALPHA_VANTAGE_API_KEY
+```sh
+npm test
+# or
+yarn test
 ```
 
-Replace `YOUR_ALPHA_VANTAGE_API_KEY` with the key you received from Alpha Vantage.
+- Tests are written with Jest and @testing-library/react-native
+- Business logic is separated into hooks and services for easy testing
 
-4. Restart your development server after making changes to the `.env` file.
+---
 
-If the API key is not set, the app will fall back to using mock data for stock prices.
+## ⚙️ Configuration & Customization
+- Change default time window, price volatility, and more in `src/constants/config.ts`
+- Add new algorithms in `src/algorithms/` and register them in `src/algorithms/index.ts`
+- Accessibility labels and error messages are centralized in `src/constants/config.ts`
 
-## Social Media Counts
+---
 
-This app uses the public [StockTwits API](https://api.stocktwits.com/developers/docs/api) to fetch recent message counts for a given stock symbol. No API key is required for StockTwits.
+## 📝 Troubleshooting
+- See the [React Native Troubleshooting Guide](https://reactnative.dev/docs/troubleshooting)
+- If you change `.env`, restart Metro (`npm start`)
+- For iOS, always run `bundle exec pod install` after changing native dependencies
+
+---
+
+## 📚 Learn More
+- [React Native Docs](https://reactnative.dev/docs/getting-started)
+- [Alpha Vantage API](https://www.alphavantage.co/documentation/)
+- [StockTwits API](https://api.stocktwits.com/developers/docs/api)
+
+---
+
+## 🙌 Contributing
+Pull requests and issues are welcome! Please follow best practices and keep business logic separated from UI for maintainability.

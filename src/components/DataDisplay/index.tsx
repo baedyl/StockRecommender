@@ -15,37 +15,80 @@ const DataDisplay: React.FC<DataDisplayProps> = ({ data, recentSocialCount }) =>
   const priceChange = ((latestData.price - firstData.price) / firstData.price) * 100;
   const avgSocialMedia = data.reduce((sum, d) => sum + d.socialMediaCount, 0) / data.length;
 
+  const getPriceChangeDescription = (change: number) => {
+    if (change > 0) {
+      return `Price increased by ${change.toFixed(2)} percent`;
+    } else if (change < 0) {
+      return `Price decreased by ${Math.abs(change).toFixed(2)} percent`;
+    } else {
+      return 'Price remained unchanged';
+    }
+  };
+
   return (
-    <View style={styles.container} accessible={true}>
-      <Text style={styles.title} accessibilityRole="header">Market Overview</Text>
-      <View style={styles.row}>
-        <View style={styles.stat}>
+    <View 
+      style={styles.container} 
+      accessible={true}
+      accessibilityLabel="Market overview and statistics"
+    >
+      <Text 
+        style={styles.title} 
+        accessibilityRole="header"
+        accessibilityLabel="Market overview section"
+      >
+        Market Overview
+      </Text>
+      <View 
+        style={styles.row}
+        accessible={true}
+        accessibilityLabel="Market statistics"
+      >
+        <View 
+          style={styles.stat}
+          accessible={true}
+          accessibilityLabel={`Latest price: $${latestData.price.toFixed(2)}`}
+        >
           <Text style={styles.label}>Latest Price</Text>
-          <Text style={styles.value} accessibilityLabel={`Latest price: $${latestData.price.toFixed(2)}`}>
+          <Text style={styles.value}>
             ${latestData.price.toFixed(2)}
           </Text>
         </View>
-        <View style={styles.stat}>
+        <View 
+          style={styles.stat}
+          accessible={true}
+          accessibilityLabel={`Price change: ${getPriceChangeDescription(priceChange)}`}
+        >
           <Text style={styles.label}>Price Change</Text>
           <Text 
             style={[styles.value, priceChange >= 0 ? styles.positive : styles.negative]}
-            accessibilityLabel={`Price change: ${priceChange >= 0 ? '+' : ''}${priceChange.toFixed(2)}%`}
           >
             {priceChange >= 0 ? '+' : ''}{priceChange.toFixed(2)}%
           </Text>
         </View>
-        <View style={styles.stat}>
+        <View 
+          style={styles.stat}
+          accessible={true}
+          accessibilityLabel={`Average social media mentions: ${Math.round(avgSocialMedia).toLocaleString()}`}
+        >
           <Text style={styles.label}>Avg Social</Text>
-          <Text style={styles.value} accessibilityLabel={`Average social media count: ${Math.round(avgSocialMedia)}`}>
+          <Text style={styles.value}>
             {Math.round(avgSocialMedia).toLocaleString()}
           </Text>
         </View>
       </View>
       {recentSocialCount !== undefined && (
-        <View style={styles.row}>
-          <View style={styles.stat}>
+        <View 
+          style={styles.row}
+          accessible={true}
+          accessibilityLabel="Recent social media activity"
+        >
+          <View 
+            style={styles.stat}
+            accessible={true}
+            accessibilityLabel={`Recent social media mentions: ${recentSocialCount.toLocaleString()}`}
+          >
             <Text style={styles.label}>Recent Social Media Count</Text>
-            <Text style={styles.value} accessibilityLabel={`Recent social media count: ${recentSocialCount}`}>
+            <Text style={styles.value}>
               {recentSocialCount.toLocaleString()}
             </Text>
           </View>

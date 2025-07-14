@@ -26,19 +26,40 @@ const StockInput: React.FC<StockInputProps> = ({
   isLoading = false
 }) => {
   return (
-    <View style={styles.container} accessible={true}>
-      <Text style={styles.label} accessibilityRole="text">Stock Symbol</Text>
+    <View 
+      style={styles.container} 
+      accessible={true}
+      accessibilityLabel="Stock analysis form"
+    >
+      <Text 
+        style={styles.label} 
+        accessibilityRole="header"
+        accessibilityLabel="Stock symbol input field"
+      >
+        Stock Symbol
+      </Text>
       <TextInput
         style={styles.input}
         value={symbol}
         onChangeText={onSymbolChange}
         placeholder="e.g., AAPL"
         autoCapitalize="characters"
-        accessibilityLabel="Stock symbol input"
-        accessibilityHint="Enter a stock symbol like AAPL or GOOGL"
+        accessibilityLabel="Stock symbol input field"
+        accessibilityHint="Enter a stock symbol like AAPL for Apple or GOOGL for Google"
+        accessibilityRole="text"
+        accessibilityState={{ 
+          disabled: isLoading
+        }}
+        importantForAccessibility="yes"
       />
       
-      <Text style={styles.label} accessibilityRole="text">Time Window (days)</Text>
+      <Text 
+        style={styles.label} 
+        accessibilityRole="header"
+        accessibilityLabel="Time window input field"
+      >
+        Time Window (days)
+      </Text>
       <TextInput
         style={styles.input}
         value={timeWindow.toString()}
@@ -50,8 +71,13 @@ const StockInput: React.FC<StockInputProps> = ({
         }}
         keyboardType="numeric"
         placeholder="10"
-        accessibilityLabel="Time window input"
-        accessibilityHint="Enter the number of days to analyze"
+        accessibilityLabel="Time window input field"
+        accessibilityHint="Enter the number of days to analyze, for example 10 for 10 days"
+        accessibilityRole="text"
+        accessibilityState={{ 
+          disabled: isLoading
+        }}
+        importantForAccessibility="yes"
       />
       
       <TouchableOpacity 
@@ -59,11 +85,19 @@ const StockInput: React.FC<StockInputProps> = ({
         onPress={onSubmit}
         disabled={isLoading}
         accessibilityRole="button"
-        accessibilityLabel="Get recommendations"
-        accessibilityState={{ disabled: isLoading }}
+        accessibilityLabel={isLoading ? "Loading recommendations" : "Get stock recommendations"}
+        accessibilityHint="Double tap to analyze the stock and get trading recommendations"
+        accessibilityState={{ 
+          disabled: isLoading,
+          busy: isLoading
+        }}
+        importantForAccessibility="yes"
       >
         {isLoading ? (
-          <ActivityIndicator color="white" />
+          <ActivityIndicator 
+            color="white" 
+            accessibilityLabel="Loading indicator"
+          />
         ) : (
           <Text style={styles.buttonText}>Get Recommendations</Text>
         )}
