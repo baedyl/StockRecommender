@@ -4,6 +4,13 @@ A cross-platform React Native app for stock recommendations, using real or mock 
 
 ---
 
+## 📹 Demo Videos
+
+- **iOS Demo:** [Watch on AwesomeScreenshot](https://www.awesomescreenshot.com/video/41991186?key=398f239dae806ee892acc33a6ef90256)
+- **Android Demo:** [Watch on AwesomeScreenshot](https://www.awesomescreenshot.com/video/41991338?key=bb227b77a07b32c40f509ea6c3d9c63e)
+
+---
+
 ## 🚀 Getting Started
 
 ### Prerequisites
